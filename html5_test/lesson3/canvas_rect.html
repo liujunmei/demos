@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Canvas绘制矩形</title>
+    <style type="text/css">
+        body{ background: #000; }
+        canvas{ background: #fff; }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="400">
+        浏览器不支持canvas
+    </canvas>
+    <script type="text/javascript">
+        window.onload = function(){
+            var myCanvas = document.getElementById('myCanvas'),
+                ctx = myCanvas.getContext('2d');
+
+            //绘制一个边框矩形
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 10;
+            ctx.strokeRect(50.5, 50.5, 100, 100);//注意坐标的设置对矩形边框的粗细有一点影响
+            //绘制一个填充矩形
+            ctx.fillStyle = 'yellow';
+            ctx.fillRect(50.5, 50.5, 100, 100);
+
+            //绘制一个填充矩形
+            ctx.fillStyle = 'yellow';
+            ctx.fillRect(50.5, 200, 100, 100);
+            //绘制一个边框矩形
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 10;
+            ctx.strokeRect(50.5, 200, 100, 100);//注意坐标的设置对矩形边框的粗细有一点影响
+            //注：绘制边框矩形与填充矩形的顺序会影响表现效果
+        };
+    </script>
+</body>
+</html>

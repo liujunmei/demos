@@ -1,0 +1,97 @@
+body,ul,p,h1,h2,h3,h4,dl,dd,form,input,textarea,select { padding:0; margin:0; font-family:arial; }
+li { list-style:none; }
+img { border:none; }
+a { text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+.clearfix { zoom: 1; }
+.clearfix:after, .clearfix:before { clear: both; }
+.clearfix:after{ content: ''; display: table; }
+
+body{ background: #fff url(../images/body_bg.png) repeat-x; }
+
+.top, .header, nav, .content_bottom, .footer{ width: 960px; margin: 0 auto; }
+    .top_menu{ float: left; }
+        .top_menu li{ float: left; background: url(../images/top_bg.png) no-repeat right 14px; font-size: 13px; padding-right: 16px;
+            margin-right: 16px; line-height: 30px; }
+        .top_menu a{ color:#c0c0c0; }
+        .top_menu a:hover{ color: #fff; }
+        .top_menu .no_dot{ background: none; margin-right: 0; padding-right: 0; }
+    .top_bar{ float: right; }
+        .top_bar li{ float: left; line-height: 30px; font-size: 13px; }
+        .top_bar .phone{ background: url(../images/top_bg.png) no-repeat 0 -16px; padding-left: 28px; margin-right: 38px; color: #fff; }
+        .top_bar .help{ background: url(../images/top_bg.png) no-repeat 0 -46px; padding-left: 38px; margin-right: 28px; }
+            .top_bar .help a{ color: #fff; }
+        .top_bar .space{ margin-right: 14px; }
+
+.header{ background: url(../images/header_bg.png) no-repeat; position: relative; }
+    .shopping{ position: absolute; top: 0; left: 0; height: 100px; background: url(../images/shopping_bg.png) no-repeat; padding-left: 84px; }
+        .shopping p{ font-size: 20px; color: #f7f7f7; margin: 30px 0 12px; }
+        .shopping a{ display: inline-block; width: 94px; height: 24px; background: url(../images/shopping_bg.png) no-repeat 0 -106px;
+            line-height: 24px; padding-left: 20px; margin-left: 20px; color: #ffc200; font-size: 14px; font-weight: bold; }
+        .header h1{ width: 236px; margin: 0 auto; height: 100px;  }
+    .search{ position: absolute; right: 0; top: 32px; height: 30px; width: 270px; padding-left: 22px;
+        background: url(../images/search_bg.png) no-repeat; }
+        .search_input{ width: 228px; height: 30px; border: none; outline: none; background: none; font-size: 13px; color: #666; line-height: 32px; }
+        .search_sub{ width: 42px; height: 30px; border: none; background: none; cursor: pointer; position: absolute; top: 0; right: 0; }
+
+.nav{ height: 44px; }
+    .nav ul{ margin-left: 20px; padding-top: 8px; }
+        .nav li{ float: left; margin-left: 4px; height: 28px; line-height: 28px; }
+    /*.nav a{ float: left; height: 28px; color: #fff; font-size: 16px; cursor: pointer; }*/
+    /*.nav strong{ float: left; height: 28px; font-weight: normal; }*/
+    /*.nav span{ float: left; height: 28px; padding: 0 14px; }*/
+        .nav a{ color: #fff; font-size: 16px; padding: 5px 0; cursor: pointer; *padding: 0; }
+            .nav strong{ padding: 5px 0; font-weight: normal; *padding: 0; }
+                .nav span{ padding: 5px 14px; }
+        .nav a:hover, .native a{ background: url(../images/nav_bg.png) repeat-x 0 -28px; text-decoration: none; }
+        .nav a:hover strong, .native a strong{ background: url(../images/nav_bg.png) no-repeat; }
+        .nav a:hover span, .native a span{ background: url(../images/nav_bg.png) no-repeat right -56px; }
+
+.content{ background: url(../images/content_bg.png) repeat-y; width: 1000px; margin: 20px auto 0; }
+    .content_top{ background: url(../images/content_bg.png) no-repeat -1000px 0; }
+        .content_bottom{ background: url(../images/content_bg.png) no-repeat -2000px bottom; padding: 10px 20px 0; }
+            .ads{ position: relative; margin: 0 auto; width: 940px; height: 300px; }
+                .ads ul{ position: absolute; top: 0; left: 0; width: 940px; height: 300px; }
+                    .ads li{ position: absolute; top: 0; left: 0; width: 940px; height: 300px; }
+                        .ads img{ position: absolute; top: 0; left: 0; z-index: 1; }
+                            .ad_des{ position: absolute; bottom: 0; left: 0; width: 940px; height: 52px; background: url(../images/ads_bg.png) repeat-x; z-index: 2; }
+                                .ad_des h3{ float: left; width: 270px; text-align: center; padding-top: 18px; color: #ffc600; font-size: 25px; z-index: 3; }
+                                .ad_des p{ float: left; width: 630px; line-height: 16px; padding-top: 14px; font-size: 13px; color: #ffcccc; z-index: 3; }
+
+            .main{ width: 940px; margin: 30px auto 0; }
+                .side{ width: 210px; margin-right: 26px; }
+                    .side_menu{ margin-bottom: 14px; }
+                        .side_menu_top{ background: url(../images/side_bg.png) repeat-x 0 -30px; margin-bottom: 1px; }
+                            .side_menu_top strong{ display: block; background:url(../images/side_bg.png) no-repeat; }
+                                .side_menu_top span{ display: block; height: 30px; line-height: 30px;
+                                    background: url(../images/side_bg.png) no-repeat right -60px; text-align: center; color: #fff; font-size: 15px; }
+                        .side_menu_list{ padding: 14px 8px 0; background: #ffeeb7; border-left: 1px solid #f3dc94; border-right: 1px solid #f3dc94; }
+                            .side_menu_list li{ height: 28px; line-height: 26px; text-align: center; }
+                                .side_menu_list a{ display: block; color: #434343; font-size: 12px; text-decoration: none; border-bottom: 1px solid #fff; }
+                            .side_menu_list .active, .side_menu_list a:hover{ color: #b20e00; border-bottom-color: #b20e00; background: #fae08d; }
+                        .side_menu_bottom{ background: url(../images/side_menu_bottom_bg.png) repeat-x 0 -16px; }
+                            .side_menu_bottom strong{ display: block; background: url(../images/side_menu_bottom_bg.png) no-repeat; }
+                                .side_menu_bottom span{ display: block; height: 16px; background: url(../images/side_menu_bottom_bg.png) no-repeat right -32px; }
+
+                    .side_join{ background: #f5f5f2; margin-bottom: 32px; }
+                        .side_join_top{ background: url(../images/side_bg.png) repeat-x 0 -106px; }
+                        .side_join_top strong{ display: block; background:url(../images/side_bg.png) no-repeat 0 -90px; }
+                            .side_join_top span{ display: block; height: 16px; background: url(../images/side_bg.png) no-repeat right -122px; }
+                        .side_join_center{ border-left: 1px solid #e8e8e3; border-right: 1px solid #e8e8e3; }
+                            .join_form{ width: 180px; margin: 0 auto; }
+                                .join_form h4{ font-size: 15px; color: #666; line-height: 18px; margin-bottom: 8px; font-weight: normal; }
+                                .join_form input{ width: 176px; height: 26px; border-bottom: none; border-right: none;
+                                    border-left: 1px solid #c0c0c0; border-top: 1px solid #9c9c9c;
+                                    text-indent: 6px; color: #666; font-size: 12px; outline: none; margin-bottom: 8px; }
+                                .join_form a{ display: block; width: 88px; height: 25px; line-height: 25px;font-size: 15px; color: #fff; text-decoration: none;
+                                    text-align: center; margin: 0 auto 14px; background: url(../images/shopping_bg.png) no-repeat 0 -135px; }
+                            .join_list{ width: 194px; margin: 0 auto; background: url(../images/shopping_bg.png) no-repeat 0 -160px; }
+                                .join_list li{ padding-left: 62px; border-top: 1px solid #fff; color: #434343; font-size: 13px; }
+                                .join_list1{ height: 45px; line-height: 45px; }
+                                .join_list2{ height: 38px; line-height: 16px; padding-top: 8px; }
+                                .join_list3{ height: 40px; line-height: 16px; padding-top: 10px; }
+                                .join_list4{ height: 28px; line-height: 15px; padding-top: 8px; }
+                            .side_join_bottom{ background: url(../images/side_bg.png) repeat-x 0 -152px; }
+                                .side_join_bottom strong{ display: block; background:url(../images/side_bg.png) no-repeat 0 -138px; }
+                                    .side_join_bottom span{ display: block; height: 14px; background: url(../images/side_bg.png) no-repeat right -166px; }

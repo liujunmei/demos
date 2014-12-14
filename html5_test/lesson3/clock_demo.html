@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Canvas效果之绘制时钟</title>
+    <style type="text/css">
+        body{ background: #000; }
+        canvas{ background: #fff; }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="400">
+        浏览器不支持canvas
+    </canvas>
+    <script type="text/javascript">
+        window.onload = function(){
+            var myCanvas = document.getElementById('myCanvas'),
+                ctx = myCanvas.getContext('2d');
+            var drawClock = function(){
+                var i = 0,//分秒刻度循环
+                    j = 0,//时刻度循环
+                    x = 200,//圆点X坐标
+                    y = 200,//圆点Y坐标
+                    r = 150,//半径
+                    startAngle = 0,//起始弧度
+                    endAngle = 0,//终止弧度
+                    now = new Date(),
+                    hourse = now.getHours(),
+                    minute = now.getMinutes(),
+                    second = now.getSeconds(),
+                    hourseAngle = (hourse/24*720 + minute/60*30 - 90) * Math.PI/180,//计算弧度，注意要减去90°（Canvas的起始弧度在顺时针90°的地方）
+                    minuteAngle = (minute/60*360 + second/60*6 - 90) * Math.PI/180,
+                    secondAngle = (second/60*360 - 90) * Math.PI/180;
+
+                ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);//清除画布
+
+                //绘制分秒刻度 start
+                ctx.save();
+                ctx.beginPath();//此次绘画描点开始
+                for( i; i<60; i++ ){
+                    startAngle = 6 * i * Math.PI/180;
+                    endAngle = 6 * (i + 1) * Math.PI/180;
+                    ctx.moveTo(x, y);//移动到圆心坐标处
+                    ctx.arc(x, y, r, startAngle, endAngle, false);
+                }
+                ctx.closePath();//此次绘画描点结束
+                ctx.stroke();//勾画描点线条
+                ctx.restore();
+                //白色填充圆盘
+                ctx.save();
+                ctx.beginPath();
+                ctx.fillStyle = '#fff';
+                ctx.moveTo(x, y);
+                ctx.arc(x, y, 19/20*r, 0, 2*Math.PI, false);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+                //绘制分秒刻度 end
+
+                //绘制时刻度 start
+                ctx.save();
+                ctx.beginPath();//此次绘画描点开始
+                ctx.lineWidth = 3;
+                for( j; j<12; j++ ){
+                    startAngle = 30 * j * Math.PI/180;
+                    endAngle = 30 * (j + 1) * Math.PI/180;
+                    ctx.moveTo(x, y);//移动到圆心坐标处
+                    ctx.arc(x, y, r, startAngle, endAngle, false);
+                }
+                ctx.closePath();//此次绘画描点结束
+                ctx.stroke();//勾画描点线条
+                ctx.restore();
+                //白色填充圆盘
+                ctx.save();
+                ctx.beginPath();
+                ctx.fillStyle = '#fff';
+                ctx.moveTo(x, y);
+                ctx.arc(x, y, 9/10*r, 0, 2*Math.PI, false);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+                //绘制时刻度 end
+
+                //绘制时针
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineWidth = 5;
+                ctx.arc(x, y, 3/5*r, hourseAngle, hourseAngle, false);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.restore();
+
+                //绘制分针
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineWidth = 3;
+                ctx.arc(x, y, 4/5*r, minuteAngle, minuteAngle, false);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.restore();
+
+                //绘制秒针
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.arc(x, y, 9/10*r, secondAngle, secondAngle, false);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.restore();
+            };
+            setInterval(drawClock, 1000);
+        };
+    </script>
+</body>
+</html>

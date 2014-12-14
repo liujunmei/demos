@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Canvas图像填充</title>
+    <style type="text/css">
+        body{ background: #000; }
+        canvas{ background: #fff; }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="400">
+        浏览器不支持canvas
+    </canvas>
+    <script type="text/javascript">
+        window.onload = function(){
+            var myCanvas = document.getElementById('myCanvas'),
+                ctx = myCanvas.getContext('2d'),
+                myImage = new Image(),//给浏览器缓存一张图片
+                drawImage = function(imgObj){
+                    ctx.drawImage(imgObj, 0, 0);
+                };
+            //onload：图像装载（到页面）完毕时调用
+            myImage.onload = function(){
+                drawImage(this);
+            }
+            myImage.src = '2.png';//src属性一定要写到onload的后面
+        };
+    </script>
+</body>
+</html>

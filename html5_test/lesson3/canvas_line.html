@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Canvas绘制线条</title>
+    <style type="text/css">
+        body{ background: #000; }
+        canvas{ background: #fff; }
+    </style>
+</head>
+<body>
+    <!--canvas画布的默认大小是300宽，150高-->
+    <canvas id="myCanvas" width="400" height="400">
+        浏览器不支持canvas<!--当浏览器不支持canvas时，显示-->
+    </canvas>
+    <script type="text/javascript">
+        window.onload = function(){
+            var myCanvas = document.getElementById('myCanvas'),
+                ctx = myCanvas.getContext('2d');
+            //绘制一个边框三角形
+            ctx.save()
+            ctx.beginPath();//绘制开始
+            ctx.moveTo(50, 50);//定位起始点
+            ctx.lineTo(300, 50);//定位下一个要到达的点
+            ctx.lineTo(300, 300);//定位下一个要到达的点
+            ctx.lineWidth = 2;//设置线宽
+            ctx.lineJoin = 'bevel';//设置线条连接的方式(round: 圆角；bevel: 斜角)
+            ctx.lineCap = 'round';//设置线条两端的样式
+            ctx.strokeStyle = 'red';//设置线的颜色
+            ctx.closePath();//绘制结束
+            ctx.stroke();//绘制线条
+            ctx.restore();
+
+            //save方法与restore方法之间的代码都是对此次画图的画布进行的设置
+            //这些设置仅对此次绘画起作用，对于两者之外的其他绘画无效，相当于一个闭合区间
+            ctx.beginPath();//绘制开始
+            ctx.moveTo(50, 50);
+            ctx.lineTo(50, 300);
+            ctx.lineTo(300, 300);
+            ctx.closePath();
+            ctx.stroke();
+
+            //绘制一个填充三角形
+            ctx.beginPath();
+            ctx.moveTo(50, 50);
+            ctx.lineTo(50, 300);
+            ctx.lineTo(300, 300);
+            ctx.fillStyle = 'yellow';
+            ctx.closePath();
+            ctx.fill();
+        };
+    </script>
+</body>
+</html>

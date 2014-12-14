@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HTML5拖放之事件绑定</title>
+    <style type="text/css">
+        li{ background: yellow; width: 100px; height: 30px; list-style: none; margin: 10px; }
+        div{ background: red; width: 100px; height: 100px; margin: 200px; }
+    </style>
+</head>
+<body>
+    <ul>
+        <li draggable="true">a</li>
+        <li draggable="true">b</li>
+        <li draggable="true">c</li>
+    </ul>
+    <div id="target"></div>
+    <script type="text/javascript">
+        window.onload = function(){
+            //注意：document.getElementsByTagName()返回值是一个节点集合，而不是一个数组！
+            //也就是：如果删除document.getElementsByTagName()返回值中的一个item，那么这个集合会变少一个item
+            var dragObjNodeList = document.getElementsByTagName('li'),
+                dragObjLen = dragObjNodeList.length,
+                i = dragObjLen,
+                targetObj = document.getElementsByTagName('div')[0];
+            while( i-- ){
+                var curDragObj = dragObjNodeList[i];
+                curDragObj.ondragstart = function(){
+                    this.style.background = 'green';
+                };
+                curDragObj.ondragend = function(){
+                    this.style.background = 'yellow';
+                };
+                curDragObj.ondrag = function(){
+                    document.title = i++;
+                };
+            };
+            targetObj.ondragenter = function(){
+                this.style.background = 'blue';
+            };
+            targetObj.ondragleave = function(){
+                this.style.background = 'red';
+            };
+            targetObj.ondragover = function(e){
+                //要想触发drop事件，就必须在dragover当中阻止默认事件(阻止鼠标禁止的状态，以触发鼠标释放的事件)
+                e.preventDefault();
+            };
+            targetObj.ondrop = function(){
+                this.style.background = 'red';
+                alert(123);
+            };
+        };
+    </script>
+</body>
+</html>

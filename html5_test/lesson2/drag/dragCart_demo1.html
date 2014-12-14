@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HTML5拖拽效果之购物车（思路改进）</title>
+    <style type="text/css">
+        .book_list li{ list-style: none; float: left; margin: 5px; border: 1px solid #000; }
+            .book_list p{ border: 1px dashed #000; margin: 2px; }
+        .cart{ border: 1px solid #000; clear: both; width: 800px; height: 100px; margin-top: 20px; }
+            .cart td{ border: none; border-bottom: 1px dashed #000; }
+            .count_tr{ text-align: right; }
+    </style>
+</head>
+<body>
+    <ul id="book_list" class="book_list">
+        <li draggable="true">
+            <img src="img1.jpg">
+            <p>JAVASCRIPT语言精粹</p>
+            <p>￥40</p>
+        </li>
+        <li draggable="true">
+            <img src="img2.jpg">
+            <p>JAVASCRIPT权威指南</p>
+            <p>￥120</p>
+        </li>
+        <li draggable="true">
+            <img src="img3.jpg">
+            <p>精通JAVASCRIPT</p>
+            <p>￥35</p>
+        </li>
+        <li draggable="true">
+            <img src="img4.jpg">
+            <p>DOM编程艺术</p>
+            <p>￥45</p>
+        </li>
+    </ul>
+    <table id="cart" class="cart"></table>
+    <script type="text/javascript">
+        window.onload = function(){
+            var bookItems = document.querySelectorAll('#book_list li'),
+                bookLen = bookItems.length,
+                i = bookLen,
+                cart = document.getElementById('cart'),
+                cartJsonObj = {},
+                accountTr = null,
+                accountTd = null,
+                accountPrice = 0;
+            while( i-- ){
+                var curItem = bookItems[i];
+                curItem.ondragstart = function(e){
+                    e = e || window.event;
+                    var dataTf = e.dataTransfer,
+                        oPs = this.getElementsByTagName('p');
+                    dataTf.setDragImage(this, 0 ,0);
+                    dataTf.setData('name', oPs[0].innerHTML.trim());
+                    dataTf.setData('price', oPs[1].innerHTML.trim());
+                };
+            };
+            cart.ondragover = function(e){
+                e = e || window.event;
+                e.preventDefault();
+            };
+            cart.ondrop = function(e){
+                //思路：将条目和总计进行分开操作
+                //第一步：获取数据，创建每一条条目的dom
+                //第二步：创建一个json对象的来除去重复的数据（去重方式），给每一个name的数据一个唯一标识
+                //第三步：计算并创建总计
+                e = e || window.event;
+                e.preventDefault();
+                var dataTf = e.dataTransfer,
+                    name = dataTf.getData('name'),
+                    price = dataTf.getData('price'),
+                    itemTr = null,
+                    itemNumber = null,
+                    itemName = null,
+                    itemPrice = null;
+                //操作条目 start
+                if( !cartJsonObj[name] ){
+                    //购物车中没有当前拖拽的条目
+                    itemTr = document.createElement('tr');
+
+                    itemNumber = document.createElement('td');
+                    itemNumber.className = 'number';
+                    itemNumber.innerHTML = 1;
+                    itemTr.appendChild(itemNumber);
+
+                    itemName = document.createElement('td');
+                    itemName.className = 'name';
+                    itemName.innerHTML = name;
+                    itemTr.appendChild(itemName);
+
+                    itemPrice = document.createElement('td');
+                    itemPrice.className = 'price';
+                    itemPrice.innerHTML = price;
+                    itemTr.appendChild(itemPrice);
+
+                    cart.appendChild(itemTr);
+                    cartJsonObj[name] = true;
+                }else{
+                    //购物车中已有当前拖拽的条目:对应条目的数量改变；对应条目的价格改变；
+                    var j = 0,
+                        curItemNumber = null,
+                        curItemName = null,
+                        curItemPrice = null,
+                        curNumber = 0,
+                        curPrice = 0,
+                        toPrice = 0;
+                    itemNumber = this.getElementsByClassName('number');
+                    itemName = this.getElementsByClassName('name');
+                    itemPrice = this.getElementsByClassName('price');
+                    j = itemNumber.length;
+                    while( j-- ){
+                        curItemNumber = itemNumber[j];
+                        curNumber = Number(curItemNumber.innerHTML.trim());
+                        curItemName = itemName[j];
+                        curItemPrice = itemPrice[j];
+                        curPrice = Number(curItemPrice.innerHTML.trim().substring(1));
+                        toPrice = curPrice + Number(price.substring(1));
+                        if( curItemName.innerHTML.trim() === name ){
+                            curItemNumber.innerHTML = curNumber + 1;
+                            curItemPrice.innerHTML = '￥' + toPrice;
+                        }
+                    };
+                };
+                //操作条目 end
+
+                //操作总计
+                if( !accountTr ){
+                    accountTr = document.createElement('tr');
+                    accountTd = document.createElement('td');
+                    accountTr.className = 'count_tr';
+                    accountTd.setAttribute('colspan', '3');
+                }
+                accountPrice += Number(price.substring(1));
+                accountTd.innerHTML = '￥' + accountPrice;
+                accountTr.appendChild(accountTd);
+                cart.appendChild(accountTr);
+            };
+        };
+    </script>
+</body>
+</html>

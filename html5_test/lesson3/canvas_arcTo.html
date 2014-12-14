@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Canvas绘制曲线</title>
+    <style type="text/css">
+        body{ background: #000; }
+        canvas{ background: #fff; }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="400">
+        浏览器不支持canvas
+    </canvas>
+    <canvas id="myCanvas1" width="400" height="400">
+        浏览器不支持canvas
+    </canvas>
+    <canvas id="myCanvas2" width="400" height="400">
+        浏览器不支持canvas
+    </canvas>
+    <script type="text/javascript">
+        window.onload = function(){
+            var myCanvas = document.getElementById('myCanvas'),
+                ctx = myCanvas.getContext('2d'),
+                myCanvas1 = document.getElementById('myCanvas1'),
+                ctx1 = myCanvas1.getContext('2d'),
+                myCanvas2 = document.getElementById('myCanvas2'),
+                ctx2 = myCanvas2.getContext('2d');
+
+            //artTo绘制曲线
+            ctx.moveTo(100, 300);//绘制弧线时的当前端点
+            //绘制与当前端点、端点1、端点2三个点所形成的夹角的两边相切并且半径为100px的圆的一段弧线
+            ctx.arcTo(100, 100, 200, 100, 100);//弧线端点1:（100， 100） 弧线端点2：（200, 100） 弧线半径：100
+            ctx.stroke();
+
+            //一个控制点的贝塞尔曲线
+            ctx1.moveTo(100, 300);
+            ctx1.quadraticCurveTo(50, 200, 200, 100);
+            ctx1.stroke();
+
+            //两个控制的贝塞尔曲线
+            ctx2.moveTo(100, 300);
+            ctx2.bezierCurveTo(50, 200, 250, 300, 300, 100);
+            ctx2.stroke();
+        };
+    </script>
+</body>
+</html>

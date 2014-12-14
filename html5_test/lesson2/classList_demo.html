@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HTML5获取class列表属性</title>
+</head>
+<body>
+    <div id="div1" class="class1 class2">DIV</div>
+    <script type="text/javascript">
+        window.onload = function(){
+            var divO = document.getElementById('div1'),
+                classArray = divO.classList,
+                classNum = classArray.length;
+            console.log('div1的class数量为：' + classNum);
+            console.log('div1的class分别为：');
+            while( classNum-- ){
+                console.log(classArray[classNum] + '; ');
+            };
+            classArray.add('class3');
+            classArray.remove('class1');
+            classArray.toggle('class2');
+        };
+    </script>
+</body>
+</html>

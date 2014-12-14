@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Canvas效果之旋转变化的方块</title>
+    <style type="text/css">
+        body{ background: #000; }
+        canvas{ background: #fff; }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="400">
+        浏览器不支持canvas
+    </canvas>
+    <script type="text/javascript">
+        window.onload = function(){
+            var myCanvas = document.getElementById('myCanvas'),
+                ctx = myCanvas.getContext('2d'),
+                num = 0,
+                num2 = 0,
+                value = 1;//处理是增大还是缩小的变量
+            setInterval(function(){
+                num++;
+                if( num2 >= 100){//放大到原始方块的2倍是临界点
+                    value = -1;//num2从100变到0
+                }else if( num2 <= 0){
+                    value = 1;//num2从0变到100
+                }
+                num2 += value;
+                ctx.save();
+                ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);//清除整个画布
+                ctx.translate(175, 175);//将画布的坐标原点移动到（175,175）处
+                ctx.beginPath();
+                ctx.rotate(num * Math.PI/180);//每次在上一次基础上旋转一度(比上一次度数增加1,即：在最初基础上旋转num个1°)
+                ctx.scale(num2/50, num2/50);//每次在上一次缩（放）1/50的大小(比上一次增大或缩小1/50，即在最初基础上增大或缩小num2个1/50)
+                //注：rotate和scale都是以方块的左上角顶点为中心点，要调整坐标原点为当前方块的中心点，只需要用translate(-width, -height)即可（width和height表示方块的宽和高）
+                ctx.translate(-50, -50);//每次旋转完后，调整画布的坐标原点为当前方块的中心点(即当前方块的左上角顶点)
+                ctx.closePath();
+                ctx.fillRect(0, 0, 100, 100);
+                ctx.restore();
+            }, 30);
+        };
+    </script>
+</body>
+</html>

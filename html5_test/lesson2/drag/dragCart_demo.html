@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HTML5拖拽效果之购物车</title>
+    <style type="text/css">
+        .book_list li{ list-style: none; float: left; margin: 5px; border: 1px solid #000; }
+            .book_list p{ border: 1px dashed #000; margin: 2px; }
+        .cart{ border: 1px solid #000; clear: both; width: 800px; height: 100px; margin-top: 20px; }
+            .cart td{ border: none; border-bottom: 1px dashed #000; }
+            .count_tr{ text-align: right; }
+    </style>
+</head>
+<body>
+    <ul id="book_list" class="book_list">
+        <li draggable="true">
+            <img src="img1.jpg">
+            <p>JAVASCRIPT语言精粹</p>
+            <p>￥40</p>
+        </li>
+        <li draggable="true">
+            <img src="img2.jpg">
+            <p>JAVASCRIPT权威指南</p>
+            <p>￥120</p>
+        </li>
+        <li draggable="true">
+            <img src="img3.jpg">
+            <p>精通JAVASCRIPT</p>
+            <p>￥35</p>
+        </li>
+        <li draggable="true">
+            <img src="img4.jpg">
+            <p>DOM编程艺术</p>
+            <p>￥45</p>
+        </li>
+    </ul>
+    <table id="cart" class="cart"></table>
+    <script type="text/javascript">
+        window.onload = function(){
+            var bookItems = document.querySelectorAll('#book_list li'),
+                bookLen = bookItems.length,
+                i = bookLen,
+                cart = document.getElementById('cart'),
+                cartJsonObj = {};
+            while( i-- ){
+                var curItem = bookItems[i];
+                curItem.ondragstart = function(e){
+                    e = e || window.event;
+                    var dataTf = e.dataTransfer,
+                        oPs = this.getElementsByTagName('p');
+                    dataTf.setDragImage(this, 0 ,0);
+                    dataTf.setData('name', oPs[0].innerHTML.trim());
+                    dataTf.setData('price', oPs[1].innerHTML.trim());
+                };
+            };
+            cart.ondragover = function(e){
+                e = e || window.event;
+                e.preventDefault();
+            };
+            cart.ondrop = function(e){
+                e = e || window.event;
+                var dataTf = e.dataTransfer,
+                    name = dataTf.getData('name'),
+                    price = dataTf.getData('price');
+                e.preventDefault();
+                //检测是否数据重复的方法：创建一个json对象
+                if( !cartJsonObj[name] ){
+                    //购物车中还没有当前拖拽的书籍
+                    cartJsonObj[name] = true;
+                    var oTr = document.createElement('tr'),
+                        oTd1 = document.createElement('td'),
+                        oTd2 = document.createElement('td'),
+                        oTd3 = document.createElement('td'),
+                        countTr = null,
+                        countTd = null,
+                        crCountTr = document.querySelector('.count_tr');
+                        countPrice = document.getElementById('account');
+                    oTd1.className = 'number';
+                    oTd1.innerHTML = 1;
+                    oTd2.className = 'name';
+                    oTd2.innerHTML = name;
+                    oTd3.className = 'price';
+                    oTd3.innerHTML = price;
+                    oTr.appendChild(oTd1);
+                    oTr.appendChild(oTd2);
+                    oTr.appendChild(oTd3);
+                    cart.appendChild(oTr);
+                    countTr = document.createElement('tr');
+                    countTd = document.createElement('td');
+                    countTr.className = 'count_tr';
+                    countTd.id = 'account';
+                    countTd.setAttribute('colspan', '3');
+                    if( crCountTr ){
+                        //有总计行
+                        var account = Number(countPrice.innerHTML.trim().substring(1)),
+                            toAccount = account + Number(price.substring(1));
+                        cart.removeChild(crCountTr);
+                        countTd.innerHTML = '￥' + toAccount;
+                    }else{
+                        //没有总计行
+                        countTd.innerHTML = price;
+                    };
+                    countTr.appendChild(countTd);
+                    cart.appendChild(countTr);
+                }else{
+                    //购物车中已经存在当前拖拽的书籍
+                    var cartNumbers = this.querySelectorAll('.number'),
+                        cartNames = this.querySelectorAll('.name'),
+                        cartNamesLen = cartNames.length,
+                        j = cartNamesLen,
+                        cartPrices = this.querySelectorAll('.price'),
+                        countPrice = document.getElementById('account'),
+                        account = Number(countPrice.innerHTML.trim().substring(1)),
+                        toAccount = account + Number(price.substring(1));
+                    while( j-- ){
+                        if( name === cartNames[j].innerHTML.trim() ){
+                            var curCartNumbers = Number(cartNumbers[j].innerHTML.trim()),
+                                curCartItemPric = Number(cartPrices[j].innerHTML.trim().substring(1)),
+                                cartItemPric = Number(price.substring(1)) + curCartItemPric;
+                            cartNumbers[j].innerHTML = curCartNumbers + 1;
+                            cartPrices[j].innerHTML = '￥' + cartItemPric;
+                        }
+                    };
+                    countPrice.innerHTML = '￥' + toAccount;
+                }
+            };
+        };
+    </script>
+</body>
+</html>

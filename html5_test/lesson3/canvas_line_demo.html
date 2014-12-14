@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Canvas效果之跟随鼠标绘制线条</title>
+    <style type="text/css">
+        body{ background: #000; }
+        canvas{ background: #fff; }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="400">
+        浏览器不支持canvas
+    </canvas>
+    <canvas id="myCanvas1" width="400" height="400">
+        浏览器不支持canvas
+    </canvas>
+    <script type="text/javascript">
+        window.onload = function(){
+            var myCanvas = document.getElementById('myCanvas'),
+                ctx = myCanvas.getContext('2d'),
+                myCanvas1 = document.getElementById('myCanvas1'),
+                ctx1 = myCanvas1.getContext('2d');
+
+            myCanvas.onmousedown = function(e){
+                e = e || window.event;
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = '#ccc';
+                ctx.beginPath();
+                ctx.moveTo(e.clientX - myCanvas.offsetLeft, e.clientY - myCanvas.offsetTop);
+
+                myCanvas.onmousemove = function(e){
+                    e = e || window.event;
+                    ctx.lineTo(e.clientX - myCanvas.offsetLeft, e.clientY - myCanvas.offsetTop);
+                    ctx.stroke();
+                };
+                myCanvas.onmouseup = function(e){
+                    myCanvas.onmousemove = null;
+                    myCanvas.onmouseup = null;
+                };
+            };
+
+            myCanvas1.onmousemove = function(e){
+                e = e || window.event;
+                ctx1.lineWidth = 2;
+                ctx1.strokeStyle = 'red';
+                ctx1.lineTo(e.clientX - myCanvas1.offsetLeft, e.clientY - myCanvas1.offsetTop);
+                ctx1.stroke();
+            };
+        };
+    </script>
+</body>
+</html>

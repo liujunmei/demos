@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HTML5拖拽之解决火狐拖拽问题————dataTransfer</title>
+    <style type="text/css">
+        li{ background: yellow; width: 100px; height: 30px; list-style: none; margin: 10px; }
+        div{ background: red; width: 100px; height: 100px; margin: 200px; }
+    </style>
+</head>
+<body>
+    <ul>
+        <li draggable="true">a</li>
+        <li draggable="true">b</li>
+        <li draggable="true">c</li>
+    </ul>
+    <div id="target"></div>
+    <script type="text/javascript">
+        window.onload = function(){
+            var dragObjNodeList = document.getElementsByTagName('li'),
+                dragObjLen = dragObjNodeList.length,
+                i = dragObjLen;
+            while( i-- ){
+                var curDragObj = dragObjNodeList[i];
+                curDragObj.ondragstart = function(e){
+                    e = e || window.event;//兼容IE
+                    this.style.background = 'green';
+                    //dataTransfer对象是事件对象的一个属性，用于从被拖拽元素相放置目标传递字符串格式的数据。
+                    //在火狐下，必须设置dataTransfer对象才可以拖拽除图片外的其他标签
+                    e.dataTransfer.setData('name', i);
+                };
+                curDragObj.ondragend = function(){
+                    this.style.background = 'yellow';
+                };
+            };
+        };
+    </script>
+</body>
+</html>

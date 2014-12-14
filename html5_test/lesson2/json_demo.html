@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HTML5的JSON新方法</title>
+</head>
+<body>
+HTML5的JSON新方法： F12看console panel
+<script type="text/javascript">
+    window.onload = function(){
+        //字符串转JSON： JSON.parse() 应用：ajax返回的字符串数据进行转换
+        var jsonStr = '{"name": "junmeil","age": 23}',
+            jsonO = JSON.parse(jsonStr);
+        for(var key in jsonO){
+            console.log(key + ': ' + jsonO[key]);
+        }
+
+        //JSON转字符串：JSON.stringify 应用：进行对象的深拷贝
+        var jsonO1 = {
+                'name': 'junmeil',
+                'age': 23,
+                'mother': {
+                    'name': 'lianxius',
+                    'age': 48
+                },
+                'father': {
+                    'name': 'shixiangl',
+                    'age': 49
+                }
+            },
+            jsonO1Str = JSON.stringify(jsonO1),
+            jsonClone = JSON.parse(jsonO1Str);
+        jsonClone.mother.age = 49;
+        console.log('这是jsonO1对象：');
+        for(var key in jsonO1){
+            var curValue = jsonO1[key];
+            if(typeof curValue === 'object'){
+                for(var key1 in curValue){
+                    console.log(key1 + ': ' + curValue[key1]);
+                }
+            }else{
+                console.log(key + ': ' + jsonO1[key]);
+            }
+        };
+        console.log('这是jsonO1的深度克隆对象jsonClone：');
+        for(var key in jsonClone){
+            var curValue = jsonClone[key];
+            if(typeof curValue === 'object'){
+                for(var key1 in curValue){
+                    console.log(key1 + ': ' + curValue[key1]);
+                }
+            }else{
+                console.log(key + ': ' + jsonClone[key]);
+            }
+        }
+    };
+</script>
+</body>
+</html>

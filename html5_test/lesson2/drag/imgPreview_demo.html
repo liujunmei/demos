@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HTML5拖拽效果之图片预览</title>
+    <style type="text/css">
+        .div1{ width: 300px; height: 300px; background: red; }
+        .preview li{ list-style: none; float: left; margin: 5px; }
+    </style>
+</head>
+<body>
+    <div id="div1" class="div1">将图片拖到这里</div>
+    <ul id="preview" class="preview"></ul>
+    <script type="text/javascript">
+        window.onload = function(){
+            var oDiv = document.querySelector('#div1'),
+                oPreview = document.querySelector('#preview');
+            oDiv.ondragenter = function(){
+                this.innerHTML = '可以释放啦';
+            };
+            oDiv.ondragleave = function(){
+                this.innerHTML = '将图片拖到这里';
+            };
+            oDiv.ondragover = function(e){
+                e.preventDefault();
+            };
+            oDiv.ondrop = function(e){
+                var fs = e.dataTransfer.files,//获取到拖拽文件的数组形势的数据
+                    fsLen = fs.length,
+                    i = fsLen,
+                    fr = null;//FileReader的实例
+                console.log(fs);
+                e.preventDefault();
+                this.innerHTML = '将图片拖到这里';
+                //1、检测是否有拖拽文件到当前区域
+                if( fsLen == 0 ){
+                    alert('没有拖拽任何文件到指定区域');
+                    return;
+                };
+                while( i-- ){
+                    var curFile = fs[i],
+                        oLi = document.createElement('li'),
+                        oImg = document.createElement('img');
+                    //2、检测拖拽的文件是否为图片类型：通过file.type属性获取文件的类型
+                    if( curFile.type.indexOf('image') === -1){
+                        alert('请上传图片类型的文件');
+                        return;
+                    };
+                    //3、检测浏览器是否支持FileReader
+                    if( !window.FileReader ){
+                        alert('您的浏览器不支持FileReader，请更换为chrome或firfox浏览器');
+                        return;
+                    };
+                    //4、获取图片URL，实现图片预览
+                    if( window.URL.createObjectURL ){
+                        //使用window.URL.createObjectURL(file)来获取文件的URL
+                        oImg.src = window.URL.createObjectURL(curFile);
+                    }else if( window.webkitURL.createObjectURL ){
+                        //chrome8+
+                        oImg.src = window.webkitURL.createObjectURL(curFile);
+                    }else{
+                        fr = new FileReader();
+                        fr.readAsDataURL(curFile);
+                        //文件读取成功
+                        fr.onload = function(){
+                            oImg.src = this.result;
+                        };
+                    }
+                    oLi.appendChild(oImg);
+                    oPreview.appendChild(oLi);
+                };
+            };
+        };
+    </script>
+</body>
+</html>

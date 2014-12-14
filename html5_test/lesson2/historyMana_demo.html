@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HTML5的历史管理之hash方法————随机选彩票示例</title>
+</head>
+<body>
+    <input type="button" id="btn" value="随机选彩票">
+    <div id="div1"></div>
+    <script type="text/javascript">
+        window.onload = function(){
+            var btn = document.getElementById('btn'),
+                hashJson = {},
+                divO = document.getElementById('div1'),
+                selectNumFunc = function(firstNum, lastNum, selectNumbers){
+                    var i = firstNum,
+                        j = 0,
+                        allNums = [],//所有备选数字的数组
+                        allNumLen,//所有备选数字的个数
+                        selectedNums = [],//选中的数字
+                        curSelectedNum,//当前选中的数字
+                        randomNum;//随机数
+                    for( i; i<=lastNum; i++ ){
+                        allNums.push(i);
+                    };
+                    for( j; j<selectNumbers; j++ ){
+                        allNumLen = allNums.length;
+                        //产生从0到allNumLen的随机数字：上限allNumLen;下限：0 （Math.random() * (上限 - 下限 + 1) + 下限）
+                        randomNum = Math.random() * allNumLen;
+                        curSelectedNum = allNums.splice(Math.floor(randomNum), 1);
+                        selectedNums.push(curSelectedNum);
+                    };
+                    return selectedNums;
+                };
+            btn.onclick = function(){
+                var selectedNums = selectNumFunc(1, 35, 7),
+                    selectedNumber = selectedNums.length,
+                    i = 0,
+                    hashRadom = Math.random() + '',//随机获取hash值
+                    radomNumsStr = '';//需要显示的随机数字符串
+                for( i; i<selectedNumber; i++ ){
+                    if( i < selectedNumber-1 ){
+                        radomNumsStr += selectedNums[i] + ', ';
+                    }else{
+                        radomNumsStr += selectedNums[i];
+                    }
+                };
+                hashJson[hashRadom] = radomNumsStr;
+                divO.innerHTML = radomNumsStr;
+                window.location.hash = hashRadom;
+            };
+            window.onhashchange = function(){
+                var radomNumsStr = hashJson[window.location.hash.substring(1)];
+                divO.innerHTML = radomNumsStr;
+            };
+        };
+    </script>
+</body>
+</html>

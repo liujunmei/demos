@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Canvas效果之图片旋转</title>
+    <style type="text/css">
+        body{ background: #000; }
+        canvas{ background: #fff; }
+    </style>
+</head>
+<body>
+    <input type="button" id="prev" value="←">
+    <input type="button" id="next" value="→">
+    <div id="canvas_wrapper">
+        <img id="myImage" src="2.png">
+    </div>
+    <script type="text/javascript">
+        window.onload = function(){
+            var myImage = document.getElementById('myImage'),
+                cImage = new Image(),
+                imgWidth = 0,
+                imgHeight = 0,
+                myCanvas = null,
+                ctx = null,
+                nextBtn = document.getElementById('next'),
+                prevBtn = document.getElementById('prev'),
+                nextNum = 0,
+                prevNum = 0;
+            //img的高度和宽度不能在img元素隐藏后获取，否则会出错
+            imgWidth = myImage.width;
+            imgHeight = myImage.height;
+            cImage.onload = function(){
+                myCanvas = document.createElement('canvas');
+                ctx = myCanvas.getContext('2d');
+                myCanvas.width = imgWidth;
+                myCanvas.height = imgHeight;
+                ctx.drawImage(myImage, 0, 0, imgWidth, imgHeight);
+                myImage.parentNode.replaceChild(myCanvas, myImage);
+                nextBtn.onclick = function(){
+                    nextNum++;
+                    switch (nextNum%4) {
+                        case 0:
+                            myCanvas.width = imgWidth;
+                            myCanvas.height = imgHeight;
+                            ctx.drawImage(cImage, 0, 0, imgWidth, imgHeight);
+                            break;
+                        case 1:
+                            //注：对canvas的高宽设置于旋转canvas之间是没有什么先后顺序的，这三条语句都仅仅是对drawImage的画布设置，
+                            // 可以理解为先填充了图片，再进行画布的宽高设置
+                            myCanvas.width = imgHeight;
+                            myCanvas.height = imgWidth;
+                            ctx.rotate(90 * Math.PI/180);
+                            ctx.drawImage(cImage, 0, -imgHeight, imgWidth, imgHeight);
+                            break;
+                        case 2:
+                            myCanvas.width = imgWidth;
+                            myCanvas.height = imgHeight;
+                            ctx.rotate(180 * Math.PI/180);
+                            ctx.drawImage(cImage, -imgWidth, -imgHeight, imgWidth, imgHeight);
+                            break;
+                        case 3:
+                            myCanvas.width = imgHeight;
+                            myCanvas.height = imgWidth;
+                            ctx.rotate(270 * Math.PI/180);
+                            ctx.drawImage(cImage, -imgWidth, 0, imgWidth, imgHeight);
+                            break;
+                    }
+                }
+                prevBtn.onclick = function(){
+                    prevNum++;
+                    switch (prevNum%4) {
+                        case 0:
+                            myCanvas.width = imgWidth;
+                            myCanvas.height = imgHeight;
+                            ctx.drawImage(cImage, 0, 0, imgWidth, imgHeight);
+                            break;
+                        case 1:
+                            //注：对canvas的高宽设置于旋转canvas之间是没有什么先后顺序的，这三条语句都仅仅是对drawImage的画布设置，
+                            // 可以理解为先填充了图片，再进行画布的宽高设置
+                            myCanvas.width = imgHeight;
+                            myCanvas.height = imgWidth;
+                            ctx.rotate(270 * Math.PI/180);
+                            ctx.drawImage(cImage, -imgWidth, 0, imgWidth, imgHeight);
+                            break;
+                        case 2:
+                            myCanvas.width = imgWidth;
+                            myCanvas.height = imgHeight;
+                            ctx.rotate(180 * Math.PI/180);
+                            ctx.drawImage(cImage, -imgWidth, -imgHeight, imgWidth, imgHeight);
+                            break;
+                        case 3:
+                            myCanvas.width = imgHeight;
+                            myCanvas.height = imgWidth;
+                            ctx.rotate(90 * Math.PI/180);
+                            ctx.drawImage(cImage, 0, -imgHeight, imgWidth, imgHeight);
+                            break;
+                    }
+                }
+            };
+            cImage.src = myImage.src;//src属性一定要写到onload的后面。
+        };
+    </script>
+</body>
+</html>
