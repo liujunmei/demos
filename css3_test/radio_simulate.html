@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>模拟单选框</title>
+    <style type="text/css">
+        span { margin: 0 5px; }
+        input[type=radio] { display: none; }
+        label { display: inline-block; width: 50px; height: 50px; border: 3px solid #000; }
+        input:checked~label { background: red; }
+    </style>
+</head>
+<body>
+    <span>
+        <input type="radio" name="rat" id="rat1">
+        <label for="rat1"></label>
+    </span>
+    <span>
+        <input type="radio" name="rat" id="rat2">
+        <label for="rat2"></label>
+    </span>
+    <span>
+        <input type="radio" name="rat" id="rat3">
+        <label for="rat3"></label>
+    </span>
+</body>
+</html>
